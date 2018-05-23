@@ -3,8 +3,6 @@ package boards.models.org;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
-
 import com.google.gson.annotations.Expose;
 
 public class Story extends Model {

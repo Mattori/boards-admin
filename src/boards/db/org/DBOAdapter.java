@@ -1,7 +1,5 @@
 package boards.db.org;
 
-import org.bson.types.ObjectId;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;

@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 import boards.db.org.MyMongo;
-import boards.models.org.Developer;
+import boards.models.org.Project;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.collections.FXCollections;
@@ -24,11 +24,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class Developers extends BaseController {
+public class Projects extends BaseController {
 
-	private ObservableList<Developer> devs;
+	private ObservableList<Project> pros;
 
-	private Developer activeDev;
+	private Project activePro;
 
 	@FXML
 	private ResourceBundle resources;
@@ -40,34 +40,34 @@ public class Developers extends BaseController {
 	private Button btAdd;
 
 	@FXML
-	private ListView<Developer> lvDevelopers;
+	private ListView<Project> lvProjects;
 
 	@FXML
-	private ComboBox<Developer> cmbDev;
+	private ComboBox<Project> cmbPro;
 
 	@FXML
 	private StackPane stackPane;
 
 	@FXML
-	private Group grpDev;
+	private Group grpPro;
 
 	@FXML
-	private TextField txtDev;
+	private TextField txtPro;
 
 	@FXML
-	private Label lblIdentity;
+	private Label lblName;
 
 	@FXML
 	private Button btDelete;
 
 	@FXML
-	private Button btUpdateDev;
+	private Button btUpdatePro;
 
 	@FXML
 	private Button btUpdate;
 
 	@FXML
-	private Button btCancelDev;
+	private Button btCancelPro;
 
 	@FXML
 	private Label lblOperation;
@@ -76,15 +76,15 @@ public class Developers extends BaseController {
 
 	@FXML
 	void initialize() {
-		devs = FXCollections.observableArrayList();
-		lvDevelopers.setCellFactory((lv) -> new ListCell<Developer>() {
+		pros = FXCollections.observableArrayList();
+		lvProjects.setCellFactory((lv) -> new ListCell<Project>() {
 			@Override
-			protected void updateItem(Developer dev, boolean empty) {
-				super.updateItem(dev, empty);
+			protected void updateItem(Project pro, boolean empty) {
+				super.updateItem(pro, empty);
 				setText(null);
 				setGraphic(null);
-				if (!empty && dev != null) {
-					setText(dev.getIdentity());
+				if (!empty && pro != null) {
+					setText(pro.getName());
 					Text icon = GlyphsDude.createIcon(FontAwesomeIcon.USER, "1.5em");
 					icon.setFill(Color.WHITE);
 					setGraphic(icon);
@@ -95,74 +95,74 @@ public class Developers extends BaseController {
 		deleteIcon.setFill(Color.RED);
 		btDelete.setGraphic(deleteIcon);
 
-		lvDevelopers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			setActiveDev(newValue);
+		lvProjects.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			setActivePro(newValue);
 		});
 
-		lvDevelopers.setItems(devs);
-		cmbDev.setItems(devs);
+		lvProjects.setItems(pros);
+		cmbPro.setItems(pros);
 		try {
-			loadDevs();
+			loadPros();
 		} catch (Exception e) {
-			showErrorDialog("MongoDB Erreur", "Chargement des Développeurs", e.getMessage());
+			showErrorDialog("MongoDB Erreur", "Chargement des Projets", e.getMessage());
 		}
-		setActiveDev(null);
+		setActivePro(null);
 		edit(false);
 	}
 
 	public void btAddClick() {
-		lblOperation.setText("Ajout de développeur");
-		Developer dev=new Developer();
-		dev.generateId();
-		setActiveDev(dev);
+		lblOperation.setText("Ajout de projet");
+		Project pro=new Project();
+		pro.generateId();
+		setActivePro(pro);
 		edit(true);
 	}
 
 	public void btDeleteClick() {
-		if (showConfirmDialog("Suppression", "Suppression de développeur", "Confirmez-vous la suppression du développeur " + activeDev.getIdentity() + " ?").equals(ButtonType.OK)) {
-			mongo.remove(activeDev);
-			devs.remove(activeDev);
+		if (showConfirmDialog("Suppression", "Suppression de projet", "Confirmez-vous la suppression du projet " + activePro.getName() + " ?").equals(ButtonType.OK)) {
+			mongo.remove(activePro);
+			pros.remove(activePro);
 
 		}
 	}
 
-	public void cancelDev() {
+	public void cancelPro() {
 		edit(false);
 	}
 
-	public void loadDevs() throws UnknownHostException {
+	public void loadPros() throws UnknownHostException {
 		mongo = new MyMongo();
 		mongo.connect("board");
-		devs.addAll(mongo.load(Developer.class));
+		pros.addAll(mongo.load(Project.class));
 	}
 
 	/**
-	 * @param activeDev
-	 *            the activeDev to set
+	 * @param activePro
+	 *            the activePro to set
 	 */
-	public void setActiveDev(Developer activeDev) {
-		this.activeDev = activeDev;
-		if (this.activeDev != null) {
-			txtDev.setText(activeDev.getIdentity());
-			lblIdentity.setText(activeDev.getIdentity());
+	public void setActivePro(Project activePro) {
+		this.activePro = activePro;
+		if (this.activePro != null) {
+			txtPro.setText(activePro.getName());
+			lblName.setText(activePro.getName());
 		}
-		btDelete.setDisable(activeDev == null);
-		btUpdate.setDisable(activeDev == null);
+		btDelete.setDisable(activePro == null);
+		btUpdate.setDisable(activePro == null);
 		edit(false);
 	}
 
-	public void updateDev() {
-		activeDev.setIdentity(txtDev.getText());
-		mongo.save("Developer", activeDev);
-		if (!devs.contains(activeDev))
-			devs.add(activeDev);
-		lvDevelopers.refresh();
-		cmbDev.setItems(devs);
+	public void updatePro() {
+		activePro.setName(txtPro.getText());
+		mongo.save("Project", activePro);
+		if (!pros.contains(activePro))
+			pros.add(activePro);
+		lvProjects.refresh();
+		cmbPro.setItems(pros);
 		edit(false);
 	}
 
 	public void btUpdateClick() {
-		lblOperation.setText("Modification de développeur");
+		lblOperation.setText("Modification de projet");
 		edit(true);
 	}
 

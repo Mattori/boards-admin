@@ -1,7 +1,5 @@
 package boards.models.org;
 
-import org.bson.types.ObjectId;
-
 import com.google.gson.annotations.Expose;
 
 public class Task extends Model {
