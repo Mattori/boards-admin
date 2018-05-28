@@ -17,7 +17,7 @@ public class Project extends Model {
 	private Date startDate;
 	@Expose
 	private Date dueDate;
-	private List<Story> stories;
+	private List<Storie> stories;
 	@Expose
 	private Developer owner;
 
@@ -43,7 +43,7 @@ public class Project extends Model {
 	}
 
 	public void addStory() {
-		stories.add(new Story());
+		stories.add(new Storie());
 	}
 
 	public String getName() {
@@ -78,11 +78,11 @@ public class Project extends Model {
 		this.dueDate = dueDate;
 	}
 
-	public List<Story> getStories() {
+	public List<Storie> getStories() {
 		return stories;
 	}
 
-	public void setStories(List<Story> stories) {
+	public void setStories(List<Storie> stories) {
 		this.stories = stories;
 	}
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
-public class Story extends Model {
+public class Storie extends Model {
 	@Expose
 	private String code;
 	@Expose
@@ -21,15 +21,15 @@ public class Story extends Model {
 	@Expose
 	private List<Task> tasks;
 
-	public Story() {
+	public Storie() {
 		this(null, "NO_CODE", "Aucun", null);
 	}
 
-	public Story(String id, String code, String descriptif) {
+	public Storie(String id, String code, String descriptif, Developer developer,Project project,List<Tag> tags,List<Task> tasks) {
 		this(id, code, descriptif, null);
 	}
 
-	public Story(String id, String code, String descriptif, Project project) {
+	public Storie(String id, String code, String descriptif,Project project) {
 		super(id);
 		this.code = code;
 		this.descriptif = descriptif;

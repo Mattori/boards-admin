@@ -9,7 +9,7 @@ import com.google.gson.annotations.Expose;
 public class Developer extends Model {
 	@Expose
 	private String identity;
-	private List<Story> stories;
+	private List<Storie> stories;
 	private List<Project> projects;
 
 	public Developer() {
@@ -31,11 +31,11 @@ public class Developer extends Model {
 		this.identity = identity;
 	}
 
-	public List<Story> getStories() {
+	public List<Storie> getStories() {
 		return stories;
 	}
 
-	public void setStories(List<Story> stories) {
+	public void setStories(List<Storie> stories) {
 		this.stories = stories;
 	}
 

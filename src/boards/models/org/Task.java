@@ -6,7 +6,7 @@ public class Task extends Model {
 	@Expose
 	private String content;
 	@Expose
-	private Story story;
+	private Storie storie;
 	@Expose
 	private boolean closed;
 
@@ -27,12 +27,12 @@ public class Task extends Model {
 		this.content = content;
 	}
 
-	public Story getStory() {
-		return story;
+	public Storie getStory() {
+		return storie;
 	}
 
-	public void setStory(Story story) {
-		this.story = story;
+	public void setStory(Storie storie) {
+		this.storie = storie;
 	}
 
 	@Override

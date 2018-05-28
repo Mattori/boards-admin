@@ -14,7 +14,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			//Chargement  du fichier Developers.fxml
-			BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/views/Tasks.fxml"));
+			BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/views/Stories.fxml"));
 			//Création d'une fenêtre
 			Scene scene = new Scene(root, 800, 400);
 			scene.getStylesheets().add(getClass().getResource(styleSheet).toString());
